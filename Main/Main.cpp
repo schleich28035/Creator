@@ -21,13 +21,13 @@ int main() {
     cout << "Введите количество записей: ";
     cin >> count;
 
-    // Формируем команду запуска Creator.exe
+    
     string creatorCmd = "Creator.exe " + binFile + " " + to_string(count);
 
     STARTUPINFOA si = { sizeof(si) };
-    PROCESS_INFORMATION pi;
+    PROCESS_INFORMATION pi;  
 
-    // --- Запуск Creator ---
+    
     if (!CreateProcessA(nullptr, creatorCmd.data(), nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi)) {
         cerr << "Ошибка запуска Creator.\n";
         return 1;
@@ -37,7 +37,7 @@ int main() {
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
 
-    // --- Чтение бинарного файла ---
+    
     cout << "\nСодержимое бинарного файла:\n";
     ifstream fin(binFile, ios::binary);
     if (!fin) {
@@ -51,16 +51,16 @@ int main() {
     }
     fin.close();
 
-    // --- Ввод данных для отчета ---
+    
     cout << "\nВведите имя файла отчета: ";
     cin >> reportFile;
     cout << "Введите оплату за час работы: ";
     cin >> rate;
 
-    // Формируем команду запуска Reporter.exe
+    
     string reporterCmd = "Reporter.exe " + binFile + " " + reportFile + " " + to_string(rate);
 
-    // --- Запуск Reporter ---
+    
     if (!CreateProcessA(nullptr, reporterCmd.data(), nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi)) {
         cerr << "Ошибка запуска Reporter.\n";
         return 1;
@@ -70,7 +70,7 @@ int main() {
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
 
-    // --- Вывод отчета ---
+    
     cout << "\nСодержимое отчета:\n";
     ifstream rep(reportFile);
     if (!rep) {
